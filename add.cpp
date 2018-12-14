@@ -38,7 +38,7 @@ int Graph::numVertices()
 {
 	return(adjlist.size());
 }
-void Graph::displayGraph(int num)
+void Graph::displayGraph(int)
 {
 	for (auto it = adjlist.begin(); it != adjlist.end(); ++it)
 	{
