@@ -28,7 +28,6 @@ void Graph::addEdge(string src, string dest, int weight)
 bool Graph::areAdjacent(string src, string dest)
 {
 	unordered_map <string, list<pair<string, int>>>::iterator it1 = adjlist.find(src);
-	list<pair<string, int>>::iterator it2;
 	for (list<pair<string, int>>::iterator it2 = it1->second.begin(); it2 != it1->second.end(); it2++)
 	if (it2->first == dest)
 		return true;
