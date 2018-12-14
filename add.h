@@ -1,31 +1,28 @@
 #pragma once
-#include<iostream>
 #include<string>
 #include<list>
 #include<unordered_map>
 using namespace std;
-class Edge{
+class Edge
+{
 public:
 	int weight;
-	string src;
-	string dest;
+	string src, dest;
 	Edge();
-	~Edge();
-
 };
 class Graph
 {
-	int EdgesNum;
-	unordered_map < string, list<pair<string, int>>>adjlist;
+	int numEdges;
+	unordered_map <string, list<pair<string, int>>> adjlist;
 	Edge edge;
 public:
-	
+
 	Graph(int);
 	void addGraph(int);
-	void addEdge();
+	void addEdge(string, string, int);
 	void addVertex(string);
+	bool areAdj(string, string);
 	void displayGraph(int);
 	void deleteGraph();
 	~Graph();
 };
-
