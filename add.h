@@ -21,7 +21,7 @@ public:
 	void addGraph(int);
 	void addEdge(string, string, int);
 	void addVertex(string);
-	bool areAdj(string, string);
+	bool areAdjacent(string, string);
 	void displayGraph(int);
 	void deleteGraph();
 	~Graph();
