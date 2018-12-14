@@ -20,6 +20,10 @@ public:
 	void addGraph(int);
 	void addEdge(string, string, int);
 	void addVertex(string);
+	void Update();
+	void deleteVertex(string);
+	void deleteEdge(string, string);
+	void editEdge(string, string, int);
 	bool areAdjacent(string, string);
 	int numVertices();
 	void displayGraph();
