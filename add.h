@@ -8,7 +8,6 @@ class Edge
 public:
 	int weight;
 	string src, dest;
-	Edge();
 };
 class Graph
 {
@@ -22,7 +21,8 @@ public:
 	void addEdge(string, string, int);
 	void addVertex(string);
 	bool areAdjacent(string, string);
-	void displayGraph(int);
+	int numVertices();
+	void displayGraph();
 	void deleteGraph();
 	~Graph();
 };
