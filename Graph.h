@@ -12,18 +12,16 @@ public:
 class Graph
 {
 	int numEdges;
-	unordered_map <string, list<pair<string, int>>> adjlist;
+	unordered_map <string, list<pair<string, int>>> adjList;
 	Edge edge;
 public:
-
-	Graph(int);
-	void addGraph(int);
+	Graph();
 	void addEdge(string, string, int);
 	void addVertex(string);
-	void Update();
+	//void Update();
 	void deleteVertex(string);
 	void deleteEdge(string, string);
-	void editEdge(string, string, int);
+	void updateWeight(string, string, int);
 	bool areAdjacent(string, string);
 	int numVertices();
 	void displayGraph();
