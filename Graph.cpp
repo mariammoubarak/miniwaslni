@@ -86,6 +86,10 @@ void Graph::updateWeight(string src, string dest, int weight)
 	if (ch == 'y')
 		addEdge(src, dest, weight);
 }
+void Graph::dijkstra(string src, string dest)
+{
+	priority_queue< dijkstraPair, vector <dijkstraPair>, greater<dijkstraPair> > pq;
+}
 //check if two nodes are neighbours
 bool Graph::areAdjacent(string src, string dest)
 {    
