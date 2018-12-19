@@ -16,6 +16,8 @@ public:
 	void deleteVertex(string);
 	void deleteEdge(string, string);
 	void updateWeight(string, string, int);
+	void getIndex();
+	void Bellman(string src, string des);
 	void dijkstra(string, string);
 	bool areAdjacent(string, string);
 	int numVertices();
