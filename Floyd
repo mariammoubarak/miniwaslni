@@ -1,0 +1,75 @@
+//floyd.h
+struct Index{
+		int label;
+		string cityName;
+	}index;
+	vector<Index>v;
+
+
+//floyd.cpp
+void Graph::floyd(){
+	int i = 0;
+	int**floydMatrix = new int*[numVertices()];
+	for (int i = 0; i < numVertices(); ++i)
+		floydMatrix[i] = new int[numVertices()];
+	for (auto it = adjList.begin(); it != adjList.end(); ++it){
+		index.cityName = it->first;
+		index.label = i;
+		v.push_back(index);
+		i++;
+	}
+	
+
+	for (int i = 0; i < numVertices(); ++i){
+		for (int j = 0; j < numVertices(); ++j){
+			if (i == j)
+				floydMatrix[i][j] = 0;
+			else
+				floydMatrix[i][j] = INF;
+		}
+	}
+	
+	int geti, getj;
+	for (auto it = adjList.begin(); it != adjList.end(); ++it){
+		for (int i = 0; i < v.size(); ++i){
+			if (v[i].cityName == it->first){
+				geti = v[i].label;
+				break;
+			 }
+		}
+		for (auto s = it->second.begin(); s != it->second.end(); ++s){
+			for (int i = 0; i < v.size(); ++i){
+				if (v[i].cityName == s->first){
+					getj = v[i].label;
+					floydMatrix[geti][getj] = s->second;
+					break;
+				}
+			}
+	    }
+	}
+	
+	
+	for (int k = 0; k < numVertices(); ++k){
+		for (int i = 0; i < numVertices(); ++i){
+			for (int j = 0; j < numVertices(); ++j){
+				if (i == j || i == k || j == k)
+					continue;
+				if (floydMatrix[i][k] + floydMatrix[k][j] < floydMatrix[i][j] && (floydMatrix[i][k] != INF && floydMatrix[k][j]!=INF))
+					floydMatrix[i][j] = floydMatrix[i][k] + floydMatrix[k][j];
+			}
+		}
+	}
+	cout << "     ";
+	for (int i = 0; i < v.size(); ++i)
+		cout << v[i].cityName << " ";
+	cout << endl;
+	for (int i = 0; i < numVertices(); ++i){
+		cout << v[i].cityName << "    ";
+		for (int j = 0; j < numVertices(); ++j){
+			cout<< floydMatrix[i][j] << "    ";
+		}
+		cout << endl;
+	}
+
+	
+}
