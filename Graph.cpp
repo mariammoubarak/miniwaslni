@@ -79,12 +79,92 @@ void Graph::updateWeight(string src, string dest, int weight)
 			return;
 		}
 	}
-	//if edge not found, offer to add it
-	char ch;
-	cout << " add it (Y|N) ? \n";
-	cin >> ch;
-	if (ch == 'y')
-		addEdge(src, dest, weight);
+	////if edge not found, offer to add it
+	//if (!found)
+	//{
+	//	char ch;
+	//	cout << " add it (Y|N) ? \n";
+	//	cin >> ch;
+	//	if (ch == 'y')
+	//		addEdge(src, dest, weight);
+}
+void Graph::getIndex()
+{
+	int i = 0, j=0;
+	list<pair<string, int>>::iterator o;
+	for (auto it = adjList.begin(); it != adjList.end(); ++it)
+	{
+		indicies[it->first] = i;
+		++i;
+	}
+	for (auto it = adjList.begin(); it != adjList.end(); ++it)
+	{
+		for (o = it->second.begin(); o != it->second.end(); ++o)
+		{
+			edgesInd[j] = make_pair(indicies[it->first], make_pair(indicies[o->first], o->second));
+			++j;
+		}
+		
+	}
+}
+void Graph::Bellman(string src, string des)
+{
+	getIndex();
+	vector<pair<int, string>> distance(numVertices());
+	stack<string> backTrack;
+	string city = des;
+	int c = 0;
+	for (int i = 0; i < numVertices(); ++i)
+	{
+		distance[i].first = INF;
+	}
+	distance[indicies[src]].first = 0;
+	for (int i = 0; i < numVertices()-1; ++i)
+	{
+		c = 0;
+		for (int j = 0; j < numEdges; ++j)
+		{
+			int s = edgesInd[j].first;
+			int d = edgesInd[j].second.first;
+			int w = edgesInd[j].second.second;
+			if (distance[s].first != INF && distance[s].first + w < distance[d].first)
+			{
+				distance[d].first = distance[s].first + w;
+				for (auto it = indicies.begin(); it != indicies.end(); ++it)
+				{
+					if (it->second == s)
+						distance[d].second = it->first;
+				}
+				c++;
+			}
+		}
+		if (c == 0)
+		{
+			break;
+		}
+	}
+	backTrack.push(des);
+	while (city != src)
+	{
+		backTrack.push(distance[indicies[city]].second);
+		city = distance[indicies[city]].second;
+	}
+	cout << "Shortest path from " << src << " to " << des << ":" << endl << "Total distance: " << distance[indicies[des]].first << endl;
+	cout << "Passing by: ";
+	while (!backTrack.empty())
+	{
+		if (backTrack.size() == 1)
+		{
+			cout << backTrack.top();
+		    backTrack.pop();
+		}
+		else
+		{
+		   cout << backTrack.top() << " -> ";
+		   backTrack.pop();
+		}
+	}
+	cout << endl << endl;
 }
 void Graph::dijkstra(string src, string dest)
 {
