@@ -8,6 +8,8 @@ class Graph
 {
 	int numEdges;
 	unordered_map <string, list<pair<string, int>>> adjList;
+	unordered_map <int, pair<int, pair<int, int>>> edgesInd;
+	unordered_map<string, int>indicies;
 
 public:
 	Graph();
