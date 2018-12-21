@@ -203,64 +203,41 @@ void Graph::getIndex()
 		
 	}
 }
-void Graph::Bellman(string src, string des)
+int Graph::Bellman(string src, string des, stack<string>& backTrack)
 {
-	getIndex();
-	vector<pair<int, string>> distance(numVertices());
-	stack<string> backTrack;
-	string city = des;
-	int c = 0;
-	for (int i = 0; i < numVertices(); ++i)
+	unordered_map<string, pair<int, string>> distance; //Map carries the city name as key, shortest path as first, and with respect to which city as second
+	if (exists(src, des))
 	{
-		distance[i].first = INF;
-	}
-	distance[indicies[src]].first = 0;
-	for (int i = 0; i < numVertices()-1; ++i)
-	{
-		c = 0;
-		for (int j = 0; j < numEdges; ++j)
+		for (auto it = adjList.begin(); it != adjList.end(); ++it) //initializing all distances with infinity
 		{
-			int s = edgesInd[j].first;
-			int d = edgesInd[j].second.first;
-			int w = edgesInd[j].second.second;
-			if (distance[s].first != INF && distance[s].first + w < distance[d].first)
+			distance[it->first].first = INF;
+		}
+		distance[src].first = 0; // initializing source shortest distance with zero
+		for (int i = 0; i < numVertices(); ++i)
+		{
+			int c = 0;
+			for (auto it = adjList.begin(); it != adjList.end(); ++it)
 			{
-				distance[d].first = distance[s].first + w;
-				for (auto it = indicies.begin(); it != indicies.end(); ++it)
+				for (auto o = it->second.begin(); o != it->second.end(); ++o)
 				{
-					if (it->second == s)
-						distance[d].second = it->first;
+					string source = it->first;
+					string destination = o->first;
+					int weight = o->second; //distance between current node and its destination
+					if (distance[source].first!=INF && distance[source].first + weight < distance[destination].first)
+					{
+						distance[destination].first = distance[source].first + weight;
+						c++;
+						distance[destination].second = source; //update shortest distance
+					}
 				}
-				c++;
 			}
+			if (c == 0) //no updates were made in the past iteration (All nodes reached the ultimate shortest path)
+				break;
 		}
-		if (c == 0)
-		{
-			break;
-		}
+		backTrack = buildPath(distance, des);
+		return distance[des].first;
 	}
-	backTrack.push(des);
-	while (city != src)
-	{
-		backTrack.push(distance[indicies[city]].second);
-		city = distance[indicies[city]].second;
-	}
-	cout << "Shortest path from " << src << " to " << des << ":" << endl << "Total distance: " << distance[indicies[des]].first << endl;
-	cout << "Passing by: ";
-	while (!backTrack.empty())
-	{
-		if (backTrack.size() == 1)
-		{
-			cout << backTrack.top();
-		    backTrack.pop();
-		}
-		else
-		{
-		   cout << backTrack.top() << " -> ";
-		   backTrack.pop();
-		}
-	}
-	cout << endl << endl;
+	return INF; //if the src or des or both don't exist
 }
 bool Graph::areAdjacent(string src, string dest)
 {    
