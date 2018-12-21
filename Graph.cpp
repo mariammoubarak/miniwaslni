@@ -5,8 +5,8 @@
 #include <stack>
 #include <functional> //for greater<> in priority queue, for sorting pq ascending
 #define INF INT_MAX
+#define dijkstraPair pair <int, string> //first of pair is the minimum distance, to ensure that pq is sorted acc. to distance. While dest. name is second of pair.
 using namespace std;
-typedef pair <int, string> dijkstraPair; //first of pair is the minimum distance, to ensure that pq is sorted acc. to distance. While dest. name is second of pair.
 
 Graph::Graph()
 {
