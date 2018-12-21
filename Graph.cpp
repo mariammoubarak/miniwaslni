@@ -3,8 +3,8 @@
 #include <queue>
 #include <vector>
 #include <stack>
-#include <functional> //for greater, for sorting pq ascending
-#define INF  INT_MAX
+#include <functional> //for greater<> in priority queue, for sorting pq ascending
+#define INF INT_MAX
 using namespace std;
 typedef pair <int, string> dijkstraPair; //first of pair is the minimum distance, to ensure that pq is sorted acc. to distance. While dest. name is second of pair.
 
@@ -89,6 +89,101 @@ void Graph::updateWeight(string src, string dest, int weight)
 	//	if (ch == 'y')
 	//		addEdge(src, dest, weight);
 }
+bool Graph::exists(string src, string dest)
+{
+	//destination is the same as source
+	if (src == dest)
+	{
+		cout << "Desired destination is already the source.\n";
+		return false;
+	}
+	//making sure that both source and destination nodes are found in graph.
+	if (adjList.find(src) == adjList.end())
+	{
+		if (adjList.find(dest) == adjList.end())
+		{
+			cout << "Both cities don't exist in graph.\n";
+			return false;
+		}
+		cout << src << " doesn't exist in graph.\n";
+		return false;
+	}
+	if (adjList.find(dest) == adjList.end())
+	{
+		cout << dest << " doesn't exist in graph.\n";
+		return false;
+	}
+	//given source is only a destination
+	if (adjList[src].empty())
+	{
+		cout << "No path from " << src << " to " << dest << " as " << src << " is only a destination.\n";
+		return false;
+	}
+	//given destination is only a source
+	for (auto it = adjList.begin(); it != adjList.end(); ++it)
+	{
+		for (auto o = it->second.begin(); o != it->second.end(); ++o)
+		{
+			if (o->first == dest)
+				return true;
+		}
+	}
+	cout << "No path from " << src << " to " << dest << " as " << dest << " is only a source.\n";
+	return false;
+}
+int Graph::dijkstra(string src, string dest, stack<string>& ss)
+{
+	if (exists(src, dest))
+	{
+		priority_queue< dijkstraPair, vector <dijkstraPair>, greater<dijkstraPair> > pq;
+		unordered_map<string, bool>visited;
+		unordered_map<string, int>distance;
+		unordered_map<string, string>parent;
+		//initialization of nodes with infinity, unvisited
+		for (auto it = adjList.begin(); it != adjList.end(); ++it)
+		{
+			visited[it->first] = 0;
+			distance[it->first] = INF; //INT_MAX
+		}
+		distance[src] = 0; 
+		pq.push(make_pair(0, src));
+		while (!pq.empty())
+		{
+			int dist = pq.top().first; //distance from source to current node
+			string s = pq.top().second; //node with shortest distance
+			pq.pop();
+			if (s == dest) //destination reached
+				break;
+			if (visited[s])
+				continue;
+			visited[s] = 1;
+			//getting all adjacent vertices of s.
+			for (auto it = adjList[s].begin(); it != adjList[s].end(); ++it)
+			{
+				if (distance[it->first] > dist + it->second)
+				{
+					distance[it->first] = dist + it->second; //update distance
+					pq.push(make_pair(distance[it->first], it->first));
+					parent[it->first] = s; //update parent
+				}
+			}
+		}
+		ss = buildPath(parent, dest);
+		return distance[dest];
+	}
+	return -1;
+}
+stack<string> Graph::buildPath(unordered_map<string, string> parent, string dest)
+{
+	stack<string> s;
+	s.push(dest);
+	for (int i = 0; i < parent.size(); ++i)
+	{
+		s.push(parent[dest]);
+		dest = parent[dest];
+	}
+	return s;
+}
 void Graph::getIndex()
 {
 	int i = 0, j=0;
@@ -167,11 +262,6 @@ void Graph::Bellman(string src, string des)
 	}
 	cout << endl << endl;
 }
-void Graph::dijkstra(string src, string dest)
-{
-	priority_queue< dijkstraPair, vector <dijkstraPair>, greater<dijkstraPair> > pq;
-}
-//check if two nodes are neighbours
 bool Graph::areAdjacent(string src, string dest)
 {    
 	if (adjList.find(src) == adjList.end())
