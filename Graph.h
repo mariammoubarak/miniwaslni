@@ -19,6 +19,7 @@ public:
 	void deleteVertex(string);
 	void deleteEdge(string, string);
 	void updateWeight(string, string, int);
+	void DFS(string);
 	bool exists(string, string);
 	int dijkstra(string, string, stack<string>&);
 	int Bellman(string src, string des, stack<string>&);
