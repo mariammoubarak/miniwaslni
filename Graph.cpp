@@ -89,6 +89,33 @@ void Graph::updateWeight(string src, string dest, int weight)
 	//	if (ch == 'y')
 	//		addEdge(src, dest, weight);
 }
+void Graph::DFS(string src)
+{
+	unordered_map<string, bool> visited;
+	stack<string> traverse;
+	string tmp = src;
+	for (auto it = adjList.begin(); it != adjList.end(); ++it)
+	{
+		visited[it->first] = 0;
+	}
+	visited[src] = 1;
+	traverse.push(src);
+	while (!traverse.empty())
+	{
+		cout << traverse.top() << endl;
+		traverse.pop();
+		for (auto o = adjList[tmp].begin(); o != adjList[tmp].end(); ++o)
+		{
+			if (visited[o->first] == 0)
+			{
+				traverse.push(o->first);
+				visited[o->first] = 1;
+			}
+		}
+		if (!traverse.empty())
+			tmp = traverse.top();
+	}
+}
 bool Graph::exists(string src, string dest)
 {
 	//destination is the same as source
