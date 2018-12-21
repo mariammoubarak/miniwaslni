@@ -21,6 +21,7 @@ public:
 	void updateWeight(string, string, int);
 	bool exists(string, string);
 	int dijkstra(string, string, stack<string>&);
+	int Bellman(string src, string des, stack<string>&);
 	stack<string> buildPath(unordered_map<string, string>, string dest);
 	void getIndex();
 	void Bellman(string src, string des);
