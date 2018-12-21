@@ -2,6 +2,7 @@
 #include<string>
 #include<list>
 #include<unordered_map>
+#include <stack>
 using namespace std;
 
 class Graph
@@ -18,9 +19,11 @@ public:
 	void deleteVertex(string);
 	void deleteEdge(string, string);
 	void updateWeight(string, string, int);
+	bool exists(string, string);
+	int dijkstra(string, string, stack<string>&);
+	stack<string> buildPath(unordered_map<string, string>, string dest);
 	void getIndex();
 	void Bellman(string src, string des);
-	void dijkstra(string, string);
 	bool areAdjacent(string, string);
 	int numVertices();
 	void displayGraph();
