@@ -256,9 +256,7 @@ void Graph::DFS(string src, vector<string>& nodes)
 	stack<string> traverse;
 	string tmp = src;
 	for (auto it = adjList.begin(); it != adjList.end(); ++it)
-	{
 		visited[it->first] = 0;
-	}
 	visited[src] = 1;
 	traverse.push(src);
 	while (!traverse.empty())
@@ -267,7 +265,7 @@ void Graph::DFS(string src, vector<string>& nodes)
 		traverse.pop();
 		for (auto o = adjList[tmp].begin(); o != adjList[tmp].end(); ++o)
 		{
-			if (visited[o->first] == 0)
+			if (!visited[o->first])
 			{
 				traverse.push(o->first);
 				visited[o->first] = 1;
@@ -275,6 +273,29 @@ void Graph::DFS(string src, vector<string>& nodes)
 		}
 		if (!traverse.empty())
 			tmp = traverse.top();
+	}
+}
+void Graph::BFS(string start, vector<string>& traverse)
+{
+	unordered_map<string, bool> visited;
+	for (auto it = adjList.begin(); it != adjList.end(); ++it)
+		visited[it->first] = 0;
+	visited[start] = 1;
+	queue<string>nodes;
+	nodes.push(start);
+	while (!nodes.empty())
+	{
+		start = nodes.front();
+		traverse.push_back(nodes.front());
+		nodes.pop();
+		for (auto it = adjList[start].begin(); it != adjList[start].end(); ++it)
+		{
+			if (!visited[it->first])
+			{
+				visited[it->first] = 1;
+				nodes.push(it->first);
+			}
+		}
 	}
 }
 void Graph::displayGraph()
