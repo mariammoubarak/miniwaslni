@@ -98,7 +98,7 @@ public:
 			return;
 		}
 	}
-	int Graph::Bellman(string src, string des, stack<string>& backTrack)
+	int Graph::BellmanFord(string src, string des, stack<string>& backTrack)
 {
 	unordered_map<string, pair<int, string>> distance; //Map carries the city name as key, shortest path as first, and with respect to which city as second
 	if (exists(src, des))
