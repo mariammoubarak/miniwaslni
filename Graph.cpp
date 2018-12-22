@@ -138,6 +138,7 @@ int Graph::dijkstra(string src, string dest, stack<string>& backtrack)
 		priority_queue< dijkstraPair, vector <dijkstraPair>, greater<dijkstraPair> > pq;
 		unordered_map<string, pair<int, string>>distance; //shortest distance as first of pair, parent of node in second of pair
 		unordered_map<string, bool>visited;
+		bool reached = false;
 		//initialization of nodes with infinity, unvisited
 		for (auto it = adjList.begin(); it != adjList.end(); ++it)
 		{
@@ -152,7 +153,10 @@ int Graph::dijkstra(string src, string dest, stack<string>& backtrack)
 			string source = pq.top().second; //node with shortest distance
 			pq.pop();
 			if (source == dest) //destination reached
+			{
+				reached = true;
 				break;
+			}
 			if (visited[source])
 				continue;
 			visited[source] = 1;
@@ -168,6 +172,11 @@ int Graph::dijkstra(string src, string dest, stack<string>& backtrack)
 					distance[destination].second = source; //update parent
 				}
 			}
+		}
+		if (!reached)
+		{
+			cout << "No path from " << src << " to " << dest << ".\n";
+			return INF;
 		}
 		backtrack = buildPath(distance, src, dest);
 		return distance[dest].first;
