@@ -3,6 +3,7 @@
 #include<list>
 #include<unordered_map>
 #include <stack>
+#include <vector>
 using namespace std;
 
 class Graph
@@ -25,6 +26,7 @@ public:
 	stack<string> buildPath(unordered_map<string, pair<int, string>>, string, string);
 	void getIndex();
 	void DFS(string);
+	vector<string> BFS(string);
 	void displayGraph();
 	bool areAdjacent(string, string);
 	int numVertices();
