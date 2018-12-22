@@ -241,7 +241,7 @@ void Graph::getIndex()
 		
 	}
 }
-void Graph::DFS(string src)
+void Graph::DFS(string src, vector<string>& nodes)
 {
 	unordered_map<string, bool> visited;
 	stack<string> traverse;
@@ -254,7 +254,7 @@ void Graph::DFS(string src)
 	traverse.push(src);
 	while (!traverse.empty())
 	{
-		cout << traverse.top() << endl;
+		nodes.push_back(traverse.top());
 		traverse.pop();
 		for (auto o = adjList[tmp].begin(); o != adjList[tmp].end(); ++o)
 		{
