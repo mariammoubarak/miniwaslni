@@ -205,7 +205,7 @@ int Graph::Bellman(string src, string des, stack<string>& backTrack)
 			if (c == 0) //no updates were made in the past iteration (All nodes reached the ultimate shortest path)
 				break;
 		}
-		backTrack = buildPath(distance, des);
+		backTrack = buildPath(distance, src, des);
 		return distance[des].first;
 	}
 	return INF; //if destination is unreachable
