@@ -98,68 +98,42 @@ public:
 			return;
 		}
 	}
-	void getIndex()
+	int Graph::Bellman(string src, string des, stack<string>& backTrack)
+{
+	unordered_map<string, pair<int, string>> distance; //Map carries the city name as key, shortest path as first, and with respect to which city as second
+	if (exists(src, des))
 	{
-		int i = 0, j = 0;
-		list<pair<string, int>>::iterator o;
-		for (auto it = adjList.begin(); it != adjList.end(); ++it)
+		for (auto it = adjList.begin(); it != adjList.end(); ++it) //initializing all distances with infinity
 		{
-			indicies[it->first] = i;
-			++i;
+			distance[it->first].first = INF;
 		}
-		for (auto it = adjList.begin(); it != adjList.end(); ++it)
-		{
-			for (o = it->second.begin(); o != it->second.end(); ++o)
-			{
-				edgesInd[j] = make_pair(indicies[it->first], make_pair(indicies[o->first], o->second));
-				++j;
-			}
-
-		}
-	}
-	int Bellman(string src, string des)
-	{
-		getIndex();
-		vector<pair<int, string>> distance(numVertices());
-		string city = des;
-		int c = 0;
+		distance[src].first = 0; // initializing source shortest distance with zero
 		for (int i = 0; i < numVertices(); ++i)
 		{
-			distance[i].first = INF;
-		}
-		distance[indicies[src]].first = 0;
-		for (int i = 0; i < numVertices() - 1; ++i)
-		{
-			c = 0;
-			for (int j = 0; j < numEdges; ++j)
+			int c = 0;
+			for (auto it = adjList.begin(); it != adjList.end(); ++it)
 			{
-				int s = edgesInd[j].first;
-				int d = edgesInd[j].second.first;
-				int w = edgesInd[j].second.second;
-				if (distance[s].first != INF && distance[s].first + w < distance[d].first)
+				for (auto o = it->second.begin(); o != it->second.end(); ++o)
 				{
-					distance[d].first = distance[s].first + w;
-					for (auto it = indicies.begin(); it != indicies.end(); ++it)
+					string source = it->first;
+					string destination = o->first;
+					int weight = o->second; //distance between current node and its destination
+					if (distance[source].first!=INF && distance[source].first + weight < distance[destination].first)
 					{
-						if (it->second == s)
-							distance[d].second = it->first;
+						distance[destination].first = distance[source].first + weight;
+						c++;
+						distance[destination].second = source; //update shortest distance
 					}
-					c++;
 				}
 			}
-			if (c == 0)
-			{
+			if (c == 0) //no updates were made in the past iteration (All nodes reached the ultimate shortest path)
 				break;
-			}
 		}
-		backTrack.push(des);
-		while (city != src)
-		{
-			backTrack.push(distance[indicies[city]].second);
-			city = distance[indicies[city]].second;
-		}
-		return distance[indicies[des]].first;
+		backTrack = buildPath(distance, des);
+		return distance[des].first;
 	}
+	return INF; //if the src or des or both don't exist
+}
 	
 	void Graph::DFS(string src, vector<string>& nodes)
         {
