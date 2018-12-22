@@ -89,33 +89,6 @@ void Graph::updateWeight(string src, string dest, int weight)
 	//	if (ch == 'y')
 	//		addEdge(src, dest, weight);
 }
-void Graph::DFS(string src)
-{
-	unordered_map<string, bool> visited;
-	stack<string> traverse;
-	string tmp = src;
-	for (auto it = adjList.begin(); it != adjList.end(); ++it)
-	{
-		visited[it->first] = 0;
-	}
-	visited[src] = 1;
-	traverse.push(src);
-	while (!traverse.empty())
-	{
-		cout << traverse.top() << endl;
-		traverse.pop();
-		for (auto o = adjList[tmp].begin(); o != adjList[tmp].end(); ++o)
-		{
-			if (visited[o->first] == 0)
-			{
-				traverse.push(o->first);
-				visited[o->first] = 1;
-			}
-		}
-		if (!traverse.empty())
-			tmp = traverse.top();
-	}
-}
 bool Graph::exists(string src, string dest)
 {
 	//destination is the same as source
@@ -158,77 +131,48 @@ bool Graph::exists(string src, string dest)
 	cout << "No path from " << src << " to " << dest << " as " << dest << " is only a source.\n";
 	return false;
 }
-int Graph::dijkstra(string src, string dest, stack<string>& ss)
+int Graph::dijkstra(string src, string dest, stack<string>& backtrack)
 {
 	if (exists(src, dest))
 	{
 		priority_queue< dijkstraPair, vector <dijkstraPair>, greater<dijkstraPair> > pq;
+		unordered_map<string, pair<int, string>>distance; //shortest distance as first of pair, parent of node in second of pair
 		unordered_map<string, bool>visited;
-		unordered_map<string, int>distance;
-		unordered_map<string, string>parent;
 		//initialization of nodes with infinity, unvisited
 		for (auto it = adjList.begin(); it != adjList.end(); ++it)
 		{
 			visited[it->first] = 0;
-			distance[it->first] = INF; //INT_MAX
+			distance[it->first].first = INF; //INT_MAX
 		}
-		distance[src] = 0; 
+		distance[src].first = 0; 
 		pq.push(make_pair(0, src));
 		while (!pq.empty())
 		{
 			int dist = pq.top().first; //distance from source to current node
-			string s = pq.top().second; //node with shortest distance
+			string source = pq.top().second; //node with shortest distance
 			pq.pop();
-			if (s == dest) //destination reached
+			if (source == dest) //destination reached
 				break;
-			if (visited[s])
+			if (visited[source])
 				continue;
-			visited[s] = 1;
-			//getting all adjacent vertices of s.
-			for (auto it = adjList[s].begin(); it != adjList[s].end(); ++it)
+			visited[source] = 1;
+			//getting all adjacent vertices of source.
+			for (auto it = adjList[source].begin(); it != adjList[source].end(); ++it)
 			{
-				if (distance[it->first] > dist + it->second)
+				string destination = it->first;
+				int weight = it->second;
+				if (distance[destination].first > dist + weight)
 				{
-					distance[it->first] = dist + it->second; //update distance
-					pq.push(make_pair(distance[it->first], it->first));
-					parent[it->first] = s; //update parent
+					distance[destination].first = dist + weight; //update distance
+					pq.push(make_pair(distance[destination].first, destination));
+					distance[destination].second = source; //update parent
 				}
 			}
 		}
-		ss = buildPath(parent, dest);
-		return distance[dest];
+		backtrack = buildPath(distance, src, dest);
+		return distance[dest].first;
 	}
-	return -1;
-}
-stack<string> Graph::buildPath(unordered_map<string, string> parent, string dest)
-{
-	stack<string> s;
-	s.push(dest);
-	for (int i = 0; i < parent.size(); ++i)
-	{
-		s.push(parent[dest]);
-		dest = parent[dest];
-	}
-	return s;
-}
-void Graph::getIndex()
-{
-	int i = 0, j=0;
-	list<pair<string, int>>::iterator o;
-	for (auto it = adjList.begin(); it != adjList.end(); ++it)
-	{
-		indicies[it->first] = i;
-		++i;
-	}
-	for (auto it = adjList.begin(); it != adjList.end(); ++it)
-	{
-		for (o = it->second.begin(); o != it->second.end(); ++o)
-		{
-			edgesInd[j] = make_pair(indicies[it->first], make_pair(indicies[o->first], o->second));
-			++j;
-		}
-		
-	}
+	return INF; //if destination is unreachable
 }
 int Graph::Bellman(string src, string des, stack<string>& backTrack)
 {
@@ -264,20 +208,65 @@ int Graph::Bellman(string src, string des, stack<string>& backTrack)
 		backTrack = buildPath(distance, des);
 		return distance[des].first;
 	}
-	return INF; //if the src or des or both don't exist
+	return INF; //if destination is unreachable
 }
-bool Graph::areAdjacent(string src, string dest)
-{    
-	if (adjList.find(src) == adjList.end())
-		return false;
-	for (auto it2 = adjList[src].begin(); it2 != adjList[src].end(); it2++)
-		if (it2->first == dest)
-			return true;
-	return false;	
-}
-int Graph::numVertices()
+stack<string> Graph::buildPath(unordered_map<string, pair<int, string>> distance, string src, string dest)
 {
-	return(adjList.size());
+	stack<string> backtrack;
+	backtrack.push(dest);
+	while (distance[dest].second != src)
+	{
+		backtrack.push(distance[dest].second);
+		dest = distance[dest].second;
+	}
+	backtrack.push(src);
+	return backtrack;
+}
+void Graph::getIndex()
+{
+	int i = 0, j=0;
+	list<pair<string, int>>::iterator o;
+	for (auto it = adjList.begin(); it != adjList.end(); ++it)
+	{
+		indicies[it->first] = i;
+		++i;
+	}
+	for (auto it = adjList.begin(); it != adjList.end(); ++it)
+	{
+		for (o = it->second.begin(); o != it->second.end(); ++o)
+		{
+			edgesInd[j] = make_pair(indicies[it->first], make_pair(indicies[o->first], o->second));
+			++j;
+		}
+		
+	}
+}
+void Graph::DFS(string src)
+{
+	unordered_map<string, bool> visited;
+	stack<string> traverse;
+	string tmp = src;
+	for (auto it = adjList.begin(); it != adjList.end(); ++it)
+	{
+		visited[it->first] = 0;
+	}
+	visited[src] = 1;
+	traverse.push(src);
+	while (!traverse.empty())
+	{
+		cout << traverse.top() << endl;
+		traverse.pop();
+		for (auto o = adjList[tmp].begin(); o != adjList[tmp].end(); ++o)
+		{
+			if (visited[o->first] == 0)
+			{
+				traverse.push(o->first);
+				visited[o->first] = 1;
+			}
+		}
+		if (!traverse.empty())
+			tmp = traverse.top();
+	}
 }
 void Graph::displayGraph()
 {
@@ -294,6 +283,19 @@ void Graph::displayGraph()
 		}
 	}
 	else return;
+}
+bool Graph::areAdjacent(string src, string dest)
+{    
+	if (adjList.find(src) == adjList.end())
+		return false;
+	for (auto it2 = adjList[src].begin(); it2 != adjList[src].end(); it2++)
+		if (it2->first == dest)
+			return true;
+	return false;	
+}
+int Graph::numVertices()
+{
+	return(adjList.size());
 }
 void Graph::deleteGraph()
 {
