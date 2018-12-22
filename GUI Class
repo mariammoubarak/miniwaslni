@@ -160,6 +160,34 @@ public:
 		}
 		return distance[indicies[des]].first;
 	}
+	
+	void Graph::DFS(string src, vector<string>& nodes)
+        {
+	  unordered_map<string, bool> visited;
+	  stack<string> traverse;
+	  string tmp = src;
+	  for (auto it = adjList.begin(); it != adjList.end(); ++it)
+	  {
+		visited[it->first] = 0;
+	  }
+	  visited[src] = 1;
+	  traverse.push(src);
+	  while (!traverse.empty())
+	  {
+		nodes.push_back(traverse.top());
+		traverse.pop();
+		for (auto o = adjList[tmp].begin(); o != adjList[tmp].end(); ++o)
+		{
+			if (visited[o->first] == 0)
+			{
+				traverse.push(o->first);
+				visited[o->first] = 1;
+			}
+		}
+		if (!traverse.empty())
+			tmp = traverse.top();
+	  }
+        }
 	int numVertices()
 	{
 		return(adjList.size());
