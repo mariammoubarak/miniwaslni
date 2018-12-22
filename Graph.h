@@ -22,7 +22,7 @@ public:
 	void updateWeight(string, string, int);
 	bool exists(string, string);
 	int dijkstra(string, string, stack<string>&);
-	int Bellman(string, string, stack<string>&);
+	int BellmanFord(string, string, stack<string>&);
 	stack<string> buildPath(unordered_map<string, pair<int, string>>, string, string);
 	void getIndex();
 	void DFS(string, vector<string>&);
