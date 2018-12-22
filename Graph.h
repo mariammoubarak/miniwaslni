@@ -26,7 +26,7 @@ public:
 	stack<string> buildPath(unordered_map<string, pair<int, string>>, string, string);
 	void getIndex();
 	void DFS(string, vector<string>&);
-	vector<string> BFS(string);
+	void BFS(string, vector<string>&);
 	void displayGraph();
 	bool areAdjacent(string, string);
 	int numVertices();
