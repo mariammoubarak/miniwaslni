@@ -129,10 +129,19 @@ public:
 			if (c == 0) //no updates were made in the past iteration (All nodes reached the ultimate shortest path)
 				break;
 		}
-		backTrack = buildPath(distance, des);
-		return distance[des].first;
+		if (distance[des].first == INF) //No possible path between the given source and destination
+		{
+			cout << "No path from " << src << " to " << des << endl;
+			return INF;
+		}
+		else
+		{
+
+		 backTrack = buildPath(distance, src, des);
+		 return distance[des].first;
+		}
 	}
-	return INF; //if the src or des or both don't exist
+	return INF; //if destination is unreachable
 }
 	
 	void Graph::DFS(string src, vector<string>& nodes)
