@@ -263,16 +263,18 @@ void Graph::DFS(string src, vector<string>& nodes)
 {
 	unordered_map<string, bool> visited;
 	stack<string> traverse;
-	string tmp = src;
-	for (auto it = adjList.begin(); it != adjList.end(); ++it)
+	for (auto it = adjList.begin(); it != adjList.end(); ++it) //Initialize all nodes to be unvisited
+	{
 		visited[it->first] = 0;
+	}
 	visited[src] = 1;
 	traverse.push(src);
 	while (!traverse.empty())
 	{
-		nodes.push_back(traverse.top());
+		src = traverse.top();   //Update src to loop on its children nodes
+		nodes.push_back(traverse.top());   //store nodes in their order of display in the vector
 		traverse.pop();
-		for (auto o = adjList[tmp].begin(); o != adjList[tmp].end(); ++o)
+		for (auto o = adjList[src].begin(); o != adjList[src].end(); ++o)
 		{
 			if (!visited[o->first])
 			{
@@ -280,8 +282,6 @@ void Graph::DFS(string src, vector<string>& nodes)
 				visited[o->first] = 1;
 			}
 		}
-		if (!traverse.empty())
-			tmp = traverse.top();
 	}
 }
 void Graph::BFS(string start, vector<string>& traverse)
