@@ -1,0 +1,27 @@
+﻿Build started 1/13/2019 8:41:18 PM.
+     1>Project "C:\Users\PC\Downloads\miniwaslni-master\miniWasalni\miniWasalni\miniWasalni.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\\" /AI"C:\Program Files (x86)\Windows Kits\8.1\References\CommonConfiguration\Neutral" /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\\" /Zi /clr /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _UNICODE /D UNICODE /EHa /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /TP /FUC:\WINDOWS\assembly\GAC_MSIL\Microsoft.ReportViewer.Common\11.0.0.0__89845dcd8080cc91\Microsoft.ReportViewer.Common.dll /FUC:\WINDOWS\assembly\GAC_MSIL\Microsoft.ReportViewer.WinForms\11.0.0.0__89845dcd8080cc91\Microsoft.ReportViewer.WinForms.dll /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Core.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Web.Services.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.DataVisualization.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll" /analyze- /errorReport:prompt /clr:nostdlib MyForm.cpp graph.cpp
+         MyForm.cpp
+     1>c:\users\pc\downloads\miniwaslni-master\miniwasalni\miniwasalni\graph.h(278): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\pc\downloads\miniwaslni-master\miniwasalni\miniwasalni\graph.h(290): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\pc\downloads\miniwaslni-master\miniwasalni\miniwasalni\MyForm.h(1556): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\pc\downloads\miniwaslni-master\miniwasalni\miniwasalni\MyForm.h(1637): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\pc\downloads\miniwaslni-master\miniwasalni\miniwasalni\MyForm.h(1641): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\pc\downloads\miniwaslni-master\miniwasalni\miniwasalni\MyForm.h(1643): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\pc\downloads\miniwaslni-master\miniwasalni\miniwasalni\MyForm.h(1648): warning C4018: '<' : signed/unsigned mismatch
+     1>MyForm.cpp(7): warning C4829: Possibly incorrect parameters to function main. Consider 'int main(Platform::Array<Platform::String^>^ argv)'
+         graph.cpp
+     1>c:\users\pc\downloads\miniwaslni-master\miniwasalni\miniwasalni\graph.h(278): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\pc\downloads\miniwaslni-master\miniwasalni\miniwasalni\graph.h(290): warning C4018: '<' : signed/unsigned mismatch
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\PC\Downloads\miniwaslni-master\miniWasalni\Debug\miniWasalni.exe" /INCREMENTAL /NOLOGO /ASSEMBLYRESOURCE:Debug\miniWasalni.MyForm.resources /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\PC\Downloads\miniwaslni-master\miniWasalni\Debug\miniWasalni.pdb" /ASSEMBLYDEBUG /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"main" /DYNAMICBASE /FIXED:NO /NXCOMPAT /MACHINE:X86 Debug\graph.obj
+         Debug\MyForm.obj
+         "Debug\.NETFramework,Version=v4.5.AssemblyAttributes.obj"
+         miniWasalni.vcxproj -> C:\Users\PC\Downloads\miniwaslni-master\miniWasalni\Debug\miniWasalni.exe
+     1>Done Building Project "C:\Users\PC\Downloads\miniwaslni-master\miniWasalni\miniWasalni\miniWasalni.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:05.67
