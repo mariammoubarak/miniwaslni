@@ -32,6 +32,11 @@ class graph
 
 	void addEdge(string src, string dest, int weight)
 	{
+		if (src == dest)
+		{
+			MessageBox::Show("Source and Destination are the same", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
 		//if edge already exists, update weight 
 		if (numEdges > 0 && areAdjacent(src, dest))
 		{
